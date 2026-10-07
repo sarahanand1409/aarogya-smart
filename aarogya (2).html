@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Aarogya — Care that follows the patient</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F6F4EC; --paper-raised:#FFFFFE; --sand:#E9E3D2; --hair:#D8D0BA;
+  --ink:#1C332E; --ink-soft:#3C5850; --slate:#6E6A5D; --slate-2:#8B8676;
+  --pine:#2F6355; --pine-deep:#1E4A3E; --pine-tint:#E4EEE9;
+  --signal:#B23A2E; --signal-deep:#8A2B21; --signal-tint:#F7E6E3;
+  --font-h: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --font-b: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+:root:not([data-theme="light"]){
+  @media (prefers-color-scheme: dark){
+    --paper:#141A18; --paper-raised:#1B2320; --sand:#20302B; --hair:#2C3B35;
+    --ink:#EFEBE0; --ink-soft:#C7CDC9; --slate:#A7A296; --slate-2:#8B8676;
+    --pine:#5EA98F; --pine-deep:#7FC2A8; --pine-tint:#1D2E28;
+    --signal:#E0796D; --signal-deep:#F0A79C; --signal-tint:#2E1D1A;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#141A18; --paper-raised:#1B2320; --sand:#20302B; --hair:#2C3B35;
+  --ink:#EFEBE0; --ink-soft:#C7CDC9; --slate:#A7A296; --slate-2:#8B8676;
+  --pine:#5EA98F; --pine-deep:#7FC2A8; --pine-tint:#1D2E28;
+  --signal:#E0796D; --signal-deep:#F0A79C; --signal-tint:#2E1D1A;
+}
+*{box-sizing:border-box;}
+html,body{height:100%;}
+html{scroll-padding-top:env(safe-area-inset-top,0px);}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font-b);line-height:1.55;-webkit-font-smoothing:antialiased;}
+h1,h2,h3{font-family:var(--font-h);font-weight:500;margin:0;color:var(--ink);}
+p{margin:0;}
+button{font-family:var(--font-b);cursor:pointer;}
+input,select,textarea{font-family:var(--font-b);}
+a{color:inherit;}
+.wrap{max-width:960px;margin:0 auto;padding:0 24px;}
+::selection{background:var(--pine-tint);color:var(--pine-deep);}
+
+/* header */
+header{position:sticky;top:0;z-index:40;background:var(--paper);border-bottom:1px solid var(--hair);padding-top:env(safe-area-inset-top,0px);}
+.headbar{max-width:960px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;gap:20px;}
+.brand{font-family:var(--font-h);font-size:21px;font-weight:600;letter-spacing:.2px;flex-shrink:0;}
+.brand span{color:var(--pine);}
+nav.mainnav{display:flex;gap:22px;flex:1;}
+nav.mainnav button{background:none;border:none;color:var(--slate);font-size:14.5px;padding:6px 0;border-bottom:2px solid transparent;}
+nav.mainnav button.active{color:var(--ink);border-color:var(--pine);}
+.head-right{display:flex;align-items:center;gap:10px;}
+.who{font-size:13px;color:var(--slate);padding:6px 12px;border:1px solid var(--hair);border-radius:5px;background:var(--paper-raised);}
+.who b{color:var(--ink);font-weight:600;}
+.emg-tab{background:var(--signal);color:#fff;border:none;padding:9px 16px;border-radius:5px;font-size:13.5px;font-weight:600;letter-spacing:.2px;display:flex;align-items:center;gap:6px;flex-shrink:0;}
+.emg-tab:hover{background:var(--signal-deep);}
+.dot{width:6px;height:6px;border-radius:50%;background:#fff;display:inline-block;}
+
+@media(max-width:700px){
+  nav.mainnav{display:none;}
+  .headbar{gap:10px;}
+  .brand{font-size:18px;}
+  .who{display:none;}
+}
+
+/* generic */
+main{padding-bottom:80px;}
+.section{padding:56px 0;}
+.section + .section{border-top:1px solid var(--hair);}
+.eyebrow{font-size:13px;color:var(--pine);margin-bottom:10px;}
+.lede{color:var(--slate);font-size:16px;max-width:52ch;margin-top:12px;}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:5px;font-size:14.5px;font-weight:600;border:1px solid var(--ink);background:var(--ink);color:var(--paper);}
+.btn:hover{background:var(--ink-soft);border-color:var(--ink-soft);}
+.btn.outline{background:transparent;color:var(--ink);border:1px solid var(--hair);}
+.btn.outline:hover{border-color:var(--slate);}
+.btn.pine{background:var(--pine);border-color:var(--pine);color:#fff;}
+.btn.pine:hover{background:var(--pine-deep);border-color:var(--pine-deep);}
+.btn.signal{background:var(--signal);border-color:var(--signal);color:#fff;}
+.btn.signal:hover{background:var(--signal-deep);}
+.btn.small{padding:7px 13px;font-size:13px;}
+.btn:disabled{opacity:.45;cursor:not-allowed;}
+
+label.field{display:block;font-size:12.5px;color:var(--slate);margin-bottom:5px;}
+input[type=text],input[type=tel],input[type=number],select,textarea{
+  width:100%;padding:10px 11px;border:1px solid var(--hair);border-radius:5px;background:var(--paper-raised);color:var(--ink);font-size:14.5px;
+}
+textarea{resize:vertical;min-height:80px;}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--pine);outline-offset:1px;}
+.field-row{margin-bottom:14px;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+@media(max-width:600px){.grid2{grid-template-columns:1fr;}}
+
+/* record rows — the chart/ledger motif, used instead of card grids */
+.record{border-top:1px solid var(--hair);}
+.row{display:flex;gap:20px;padding:20px 0;border-bottom:1px solid var(--hair);align-items:flex-start;}
+.row .num{font-family:var(--font-h);font-size:15px;color:var(--slate-2);width:26px;flex-shrink:0;padding-top:2px;}
+.row .body{flex:1;min-width:0;}
+.row h3{font-size:17px;margin-bottom:4px;}
+.row p.desc{color:var(--slate);font-size:14.5px;max-width:58ch;}
+
+.chip{display:inline-block;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600;background:var(--pine-tint);color:var(--pine-deep);}
+.chip.now{background:var(--pine);color:#fff;}
+.chip.off{background:var(--sand);color:var(--slate);}
+.chip.urgent{background:var(--signal-tint);color:var(--signal-deep);}
+
+.panel{background:var(--paper-raised);border:1px solid var(--hair);border-radius:8px;padding:22px 24px;}
+
+/* home hero */
+.hero{padding:64px 0 44px;}
+.hero h1{font-size:clamp(32px,5vw,46px);line-height:1.12;max-width:15ch;}
+.hero-ctas{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap;}
+.stat-strip{display:flex;gap:40px;margin-top:48px;flex-wrap:wrap;}
+.stat b{font-family:var(--font-h);font-size:26px;display:block;color:var(--pine-deep);}
+.stat span{font-size:12.5px;color:var(--slate);}
+
+/* view management */
+.view{display:none;}
+.view.active{display:block;}
+
+/* tabs inside dashboards */
+.subtabs{display:flex;gap:4px;border-bottom:1px solid var(--hair);margin-bottom:26px;flex-wrap:wrap;}
+.subtabs button{background:none;border:none;padding:10px 15px;font-size:14px;color:var(--slate);border-bottom:2px solid transparent;margin-bottom:-1px;}
+.subtabs button.active{color:var(--ink);border-color:var(--pine);font-weight:600;}
+
+/* patient/doctor pick list */
+.pick-list{border-top:1px solid var(--hair);}
+.pick{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--hair);gap:12px;}
+.pick .meta{font-size:13px;color:var(--slate);}
+.avatar{width:36px;height:36px;border-radius:50%;background:var(--pine-tint);color:var(--pine-deep);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:13px;flex-shrink:0;}
+.pick-left{display:flex;gap:12px;align-items:center;}
+
+/* results table-like list */
+.result{border:1px solid var(--hair);border-radius:7px;padding:16px 18px;margin-bottom:12px;background:var(--paper-raised);}
+.result-top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:baseline;}
+.result h4{font-size:15.5px;font-weight:600;font-family:var(--font-b);}
+.slot-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;}
+.slot{padding:7px 12px;border:1px solid var(--hair);border-radius:5px;font-size:13px;background:var(--paper);}
+.slot:hover{border-color:var(--pine);}
+.slot.picked{background:var(--pine);color:#fff;border-color:var(--pine);}
+
+.divider{height:1px;background:var(--hair);margin:28px 0;}
+.empty{color:var(--slate-2);font-size:14px;padding:24px 0;text-align:center;border:1px dashed var(--hair);border-radius:8px;}
+
+.badge-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;}
+.timing-toggle{display:flex;gap:6px;}
+.timing-toggle button{padding:6px 11px;font-size:12.5px;border:1px solid var(--hair);background:var(--paper);border-radius:5px;color:var(--slate);}
+.timing-toggle button.on{background:var(--pine);color:#fff;border-color:var(--pine);}
+
+.med-line{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--hair);gap:10px;}
+.med-line:last-child{border-bottom:none;}
+.med-name{font-weight:500;font-size:14.5px;}
+.med-sub{font-size:12.5px;color:var(--slate);margin-top:2px;}
+.take-check{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--slate);}
+.take-check input{width:15px;height:15px;}
+
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:11px 20px;border-radius:6px;font-size:13.5px;z-index:99;opacity:0;pointer-events:none;transition:opacity .25s ease, bottom .25s ease;}
+.toast.show{opacity:1;bottom:32px;}
+
+.footer-note{color:var(--slate-2);font-size:12.5px;margin-top:10px;}
+
+/* emergency view */
+.emg-hero{background:var(--signal-tint);border:1px solid var(--signal);border-radius:9px;padding:30px 28px;margin-bottom:32px;}
+.emg-hero h1{color:var(--signal-deep);font-size:28px;max-width:22ch;}
+.emg-hero p{color:var(--signal-deep);margin-top:8px;font-size:14.5px;max-width:56ch;}
+.emg-call{margin-top:18px;}
+.hosp-row{display:flex;justify-content:space-between;align-items:center;padding:18px 0;border-bottom:1px solid var(--hair);gap:14px;flex-wrap:wrap;}
+.hosp-name{font-weight:600;font-size:15.5px;}
+.hosp-meta{font-size:13px;color:var(--slate);margin-top:3px;}
+
+@media(max-width:600px){
+  .section{padding:40px 0;}
+  .hero{padding:44px 0 32px;}
+  .result-top{flex-direction:column;align-items:flex-start;}
+}
+
+/* chat assistant */
+.chat-fab{position:fixed;right:20px;bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:50;background:var(--pine);color:#fff;border:none;padding:13px 18px;border-radius:30px;font-size:14px;font-weight:600;display:none;align-items:center;gap:8px;box-shadow:0 6px 18px rgba(0,0,0,.18);}
+.chat-fab.show{display:flex;}
+.chat-fab:hover{background:var(--pine-deep);}
+.chat-panel{position:fixed;right:20px;bottom:calc(84px + env(safe-area-inset-bottom,0px));width:360px;max-width:calc(100vw - 40px);height:min(560px,72vh);background:var(--paper-raised);border:1px solid var(--hair);border-radius:12px;box-shadow:0 14px 40px rgba(0,0,0,.22);z-index:51;display:none;flex-direction:column;overflow:hidden;}
+.chat-panel.open{display:flex;}
+.chat-head{padding:14px 16px;border-bottom:1px solid var(--hair);display:flex;justify-content:space-between;align-items:center;background:var(--pine-tint);flex-shrink:0;}
+.chat-head h3{font-size:14.5px;color:var(--pine-deep);}
+.chat-head button{background:none;border:none;color:var(--pine-deep);font-size:18px;line-height:1;padding:4px;}
+.chat-body{flex:1;overflow-y:auto;padding:14px 16px;display:flex;flex-direction:column;gap:10px;}
+.msg{max-width:85%;padding:9px 12px;border-radius:9px;font-size:13.5px;line-height:1.45;white-space:pre-wrap;}
+.msg.bot{background:var(--sand);color:var(--ink);align-self:flex-start;border-bottom-left-radius:2px;}
+.msg.user{background:var(--pine);color:#fff;align-self:flex-end;border-bottom-right-radius:2px;}
+.msg.note{align-self:center;font-size:11.5px;color:var(--slate-2);background:none;padding:2px 0;text-align:center;}
+.chat-foot{border-top:1px solid var(--hair);padding:10px 12px;display:flex;gap:8px;align-items:flex-end;flex-shrink:0;}
+.chat-foot textarea{flex:1;min-height:38px;max-height:90px;padding:8px 10px;font-size:13.5px;resize:none;}
+.chat-foot button.send{background:var(--pine);color:#fff;border:none;border-radius:6px;padding:9px 14px;font-size:13px;font-weight:600;flex-shrink:0;}
+.chat-foot button.send:disabled{opacity:.4;}
+.chat-disclaimer{font-size:11px;color:var(--slate-2);padding:0 16px 10px;flex-shrink:0;}
+.typing{display:inline-flex;gap:3px;padding:9px 12px;align-self:flex-start;background:var(--sand);border-radius:9px;border-bottom-left-radius:2px;}
+.typing span{width:5px;height:5px;border-radius:50%;background:var(--slate-2);animation:blink 1.2s infinite ease-in-out;}
+.typing span:nth-child(2){animation-delay:.2s;}
+.typing span:nth-child(3){animation-delay:.4s;}
+@keyframes blink{0%,80%,100%{opacity:.25;}40%{opacity:1;}}
+@media(max-width:600px){
+  .chat-panel{right:10px;left:10px;width:auto;bottom:calc(78px + env(safe-area-inset-bottom,0px));}
+  .chat-fab{right:14px;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="headbar">
+    <div class="brand">Aarogya<span>.</span></div>
+    <nav class="mainnav">
+      <button data-nav="home" class="active">Home</button>
+      <button data-nav="findcare">Find care</button>
+    </nav>
+    <div class="head-right">
+      <div class="who" id="whoBadge">Not signed in</div>
+      <button class="emg-tab" data-nav="emergency"><span class="dot"></span>Emergency</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- HOME -->
+  <section class="view active" id="view-home">
+    <div class="hero">
+      <div class="eyebrow">Hospital &amp; clinic network</div>
+      <h1>Care that follows the patient, not the paperwork.</h1>
+      <p class="lede">Check doctor availability, book appointments, and keep every prescription in one record that any doctor in the network can pull up — the moment you need it.</p>
+      <div class="hero-ctas">
+        <button class="btn pine" data-nav="patient-auth">Continue as patient</button>
+        <button class="btn outline" data-nav="doctor-auth">Continue as doctor</button>
+      </div>
+      <div class="stat-strip">
+        <div class="stat"><b id="statHospitals">—</b><span>hospitals connected</span></div>
+        <div class="stat"><b id="statDoctors">—</b><span>doctors on the network</span></div>
+        <div class="stat"><b>24/7</b><span>emergency routing</span></div>
+      </div>
+    </div>
+
+    <div class="record">
+      <div class="row">
+        <div class="num">01</div>
+        <div class="body">
+          <h3>Describe the problem, find the right care</h3>
+          <p class="desc">Type what's wrong in plain words. Aarogya matches it to a specialty and shows nearby hospitals with doctors free today.</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="num">02</div>
+        <div class="body">
+          <h3>Book a slot without a phone call</h3>
+          <p class="desc">See a doctor's real openings for the day and reserve one instantly. No waiting room guesswork.</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="num">03</div>
+        <div class="body">
+          <h3>Prescriptions become reminders</h3>
+          <p class="desc">After a visit, the doctor logs the medicines. You get a morning, afternoon and night schedule with a nudge at each dose.</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="num">04</div>
+        <div class="body">
+          <h3>One record, every doctor</h3>
+          <p class="desc">A doctor anywhere in the network can look a patient up and see their full history — past visits, notes and prescriptions — instantly.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FIND CARE (public, no login needed) -->
+  <section class="view" id="view-findcare">
+    <div class="eyebrow">Find care</div>
+    <h1 style="font-size:26px;margin-bottom:6px;">What's going on?</h1>
+    <p class="lede" style="margin-bottom:22px;">Describe the problem in your own words. We'll match it to a specialty and show who's free nearby.</p>
+    <div class="panel">
+      <div class="field-row">
+        <label class="field">Symptom or problem</label>
+        <textarea id="symptomInput" placeholder="e.g. fever since yesterday, sore throat and body ache"></textarea>
+      </div>
+      <button class="btn pine" id="symptomSearchBtn">Find care</button>
+    </div>
+    <div id="careResults" style="margin-top:26px;"></div>
+  </section>
+
+  <!-- PATIENT AUTH -->
+  <section class="view" id="view-patient-auth">
+    <div class="eyebrow">Patient</div>
+    <h1 style="font-size:26px;margin-bottom:22px;">Sign in to your record</h1>
+    <div class="panel" style="margin-bottom:22px;">
+      <h3 style="font-size:15px;margin-bottom:10px;">Existing patients (demo)</h3>
+      <div class="pick-list" id="patientPickList"></div>
+    </div>
+    <div class="panel">
+      <h3 style="font-size:15px;margin-bottom:14px;">Or register as a new patient</h3>
+      <div class="grid2">
+        <div class="field-row"><label class="field">Full name</label><input type="text" id="npName" placeholder="Full name"></div>
+        <div class="field-row"><label class="field">Aadhaar number</label><input type="text" id="npAadhaar" placeholder="12-digit Aadhaar" maxlength="12"></div>
+        <div class="field-row"><label class="field">Age</label><input type="number" id="npAge" placeholder="Age"></div>
+        <div class="field-row"><label class="field">Gender</label>
+          <select id="npGender"><option>Female</option><option>Male</option><option>Other</option></select>
+        </div>
+        <div class="field-row"><label class="field">Phone</label><input type="tel" id="npPhone" placeholder="10-digit mobile"></div>
+      </div>
+      <div id="npError" style="color:var(--signal);font-size:13px;margin-bottom:10px;display:none;"></div>
+      <button class="btn pine" id="registerPatientBtn">Register and continue</button>
+    </div>
+  </section>
+
+  <!-- PATIENT DASHBOARD -->
+  <section class="view" id="view-patient-dash">
+    <div class="subtabs">
+      <button data-ptab="care" class="active">Find care</button>
+      <button data-ptab="appts">Appointments</button>
+      <button data-ptab="meds">Prescriptions &amp; reminders</button>
+      <button data-ptab="record">My record</button>
+    </div>
+    <div id="ptab-care"></div>
+    <div id="ptab-appts" style="display:none;"></div>
+    <div id="ptab-meds" style="display:none;"></div>
+    <div id="ptab-record" style="display:none;"></div>
+  </section>
+
+  <!-- DOCTOR AUTH -->
+  <section class="view" id="view-doctor-auth">
+    <div class="eyebrow">Doctor</div>
+    <h1 style="font-size:26px;margin-bottom:22px;">Sign in to the network</h1>
+    <div class="panel" style="margin-bottom:22px;">
+      <h3 style="font-size:15px;margin-bottom:10px;">Registered doctors (demo)</h3>
+      <div class="pick-list" id="doctorPickList"></div>
+    </div>
+    <div class="panel">
+      <h3 style="font-size:15px;margin-bottom:14px;">Or register as a new doctor</h3>
+      <div class="grid2">
+        <div class="field-row"><label class="field">Full name</label><input type="text" id="ndName" placeholder="Dr. Full name"></div>
+        <div class="field-row"><label class="field">Specialty</label>
+          <select id="ndSpecialty"></select>
+        </div>
+        <div class="field-row"><label class="field">Hospital</label>
+          <select id="ndHospital"></select>
+        </div>
+      </div>
+      <div id="ndError" style="color:var(--signal);font-size:13px;margin-bottom:10px;display:none;"></div>
+      <button class="btn pine" id="registerDoctorBtn">Register and continue</button>
+    </div>
+  </section>
+
+  <!-- DOCTOR DASHBOARD -->
+  <section class="view" id="view-doctor-dash">
+    <div class="subtabs">
+      <button data-dtab="avail" class="active">My availability</button>
+      <button data-dtab="lookup">Patient lookup</button>
+      <button data-dtab="visit">Log a visit</button>
+    </div>
+    <div id="dtab-avail"></div>
+    <div id="dtab-lookup" style="display:none;"></div>
+    <div id="dtab-visit" style="display:none;"></div>
+  </section>
+
+  <!-- EMERGENCY -->
+  <section class="view" id="view-emergency">
+    <div class="emg-hero">
+      <h1>If this is a medical emergency, call now.</h1>
+      <p>Don't wait for a booking or a bed. Every hospital below with an ER marked open will take walk-ins immediately, no appointment needed.</p>
+      <a href="tel:108" class="btn signal emg-call">Call 108 — National ambulance</a>
+    </div>
+    <h3 style="font-size:15px;margin-bottom:4px;">Nearest emergency rooms</h3>
+    <p class="footer-note" style="margin-bottom:6px;">Sorted by distance.</p>
+    <div id="emgHospitalList"></div>
+  </section>
+
+</main>
+
+<button class="chat-fab" id="chatFab">💬 Ask Aarogya</button>
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-head"><h3>Aarogya Assistant</h3><button id="chatClose" aria-label="Close">✕</button></div>
+  <div class="chat-body" id="chatBody"></div>
+  <div class="chat-disclaimer">General information only, not a diagnosis. For emergencies use the Emergency section or call 108.</div>
+  <div class="chat-foot">
+    <textarea id="chatInput" placeholder="Ask a medical question..." rows="1"></textarea>
+    <button class="send" id="chatSend">Send</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+"use strict";
+
+var SPECIALTIES = ["General Physician","Cardiology","Pediatrics","Dermatology","Orthopedics","Ophthalmology","ENT"];
+
+var SYMPTOM_MAP = [
+  [/chest|heart|palpitat|blood pressure|\bbp\b/i, "Cardiology"],
+  [/child|kid|baby|infant|toddler/i, "Pediatrics"],
+  [/skin|rash|acne|itch|eczema/i, "Dermatology"],
+  [/bone|fracture|joint|back pain|knee|shoulder|sprain/i, "Orthopedics"],
+  [/eye|vision|blurry/i, "Ophthalmology"],
+  [/ear|nose|throat|sinus|tonsil/i, "ENT"]
+];
+
+var SEED = {
+  hospitals: [
+    {id:"h1", name:"Sundaram General Hospital", area:"RS Puram", distanceKm:1.8, phone:"1140228876", specialties:["General Physician","Cardiology","Orthopedics"], erOpen:true},
+    {id:"h2", name:"Nirmala Medical Centre", area:"Gandhipuram", distanceKm:3.2, phone:"1140228877", specialties:["Pediatrics","Dermatology","General Physician"], erOpen:true},
+    {id:"h3", name:"Vishwas Orthopaedic & Trauma Centre", area:"Peelamedu", distanceKm:5.6, phone:"1140228878", specialties:["Orthopedics","General Physician"], erOpen:false},
+    {id:"h4", name:"Lotus Eye & ENT Hospital", area:"Saibaba Colony", distanceKm:4.1, phone:"1140228879", specialties:["Ophthalmology","ENT"], erOpen:false}
+  ],
+  doctors: [
+    {id:"d1", name:"Dr. Meera Krishnan", specialty:"General Physician", hospitalId:"h1", available:true, slots:["09:00","09:30","10:00","11:30"], booked:[]},
+    {id:"d2", name:"Dr. Arjun Rao", specialty:"Cardiology", hospitalId:"h1", available:true, slots:["10:00","10:30","14:00"], booked:[]},
+    {id:"d3", name:"Dr. Priya Sundaram", specialty:"Pediatrics", hospitalId:"h2", available:true, slots:["09:00","09:15","09:30","16:00"], booked:[]},
+    {id:"d4", name:"Dr. Karthik Iyer", specialty:"Orthopedics", hospitalId:"h3", available:false, slots:["11:00","11:30"], booked:[]},
+    {id:"d5", name:"Dr. Divya Nair", specialty:"Dermatology", hospitalId:"h2", available:true, slots:["15:00","15:30","16:00"], booked:[]}
+  ],
+  patients: [
+    {aadhaar:"490011223344", name:"Ramesh Babu", age:52, gender:"Male", phone:"9876543210",
+      history:[{date:"2026-08-14", doctorName:"Dr. Meera Krishnan", problem:"Seasonal fever", notes:"Advised rest and fluids, review if fever persists beyond 3 days."}],
+      prescriptions:[{date:"2026-08-14", doctorName:"Dr. Meera Krishnan", medicines:[
+        {name:"Paracetamol 500mg", timing:["morning","night"], duration:"5 days"},
+        {name:"Cetirizine 10mg", timing:["night"], duration:"5 days"}
+      ]}],
+      appointments:[]}
+  ]
+};
+
+var state = null;
+try{
+  var raw = localStorage.getItem("aarogya_state_v1");
+  state = raw ? JSON.parse(raw) : null;
+}catch(e){ state = null; }
+if(!state){ state = JSON.parse(JSON.stringify(SEED)); }
+state.currentPatientAadhaar = state.currentPatientAadhaar || null;
+state.currentDoctorId = state.currentDoctorId || null;
+state.takenLog = state.takenLog || {};
+
+function save(){
+  try{ localStorage.setItem("aarogya_state_v1", JSON.stringify(state)); }catch(e){}
+}
+
+function toast(msg){
+  var t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(t._h);
+  t._h = setTimeout(function(){ t.classList.remove("show"); }, 2200);
+}
+
+function maskAadhaar(a){
+  if(!a || a.length < 4) return a || "";
+  return "XXXX-XXXX-" + a.slice(-4);
+}
+
+function initials(name){
+  return (name||"").replace(/^Dr\.\s*/,"").split(" ").filter(Boolean).slice(0,2).map(function(w){return w[0];}).join("").toUpperCase();
+}
+
+function findHospital(id){ return state.hospitals.find(function(h){return h.id===id;}); }
+function findDoctor(id){ return state.doctors.find(function(d){return d.id===id;}); }
+function currentPatient(){ return state.patients.find(function(p){return p.aadhaar===state.currentPatientAadhaar;}); }
+function currentDoctor(){ return state.doctors.find(function(d){return d.id===state.currentDoctorId;}); }
+
+/* ---------- routing ---------- */
+var views = ["home","findcare","patient-auth","patient-dash","doctor-auth","doctor-dash","emergency"];
+function nav(name){
+  views.forEach(function(v){
+    document.getElementById("view-"+v).classList.toggle("active", v===name);
+  });
+  document.querySelectorAll("nav.mainnav button").forEach(function(b){
+    b.classList.toggle("active", b.dataset.nav===name);
+  });
+  window.scrollTo({top:0, behavior:"instant" in window ? "instant" : "auto"});
+  if(name==="patient-dash") renderPatientDash();
+  if(name==="doctor-dash") renderDoctorDash();
+  if(name==="emergency") renderEmergency();
+  if(name==="home") renderStats();
+}
+document.querySelectorAll("[data-nav]").forEach(function(el){
+  el.addEventListener("click", function(){ nav(el.dataset.nav); });
+});
+
+function renderWho(){
+  var el = document.getElementById("whoBadge");
+  var p = currentPatient(), d = currentDoctor();
+  if(p){ el.innerHTML = "Patient · <b>"+esc(p.name)+"</b>"; }
+  else if(d){ el.innerHTML = "Doctor · <b>"+esc(d.name)+"</b>"; }
+  else { el.textContent = "Not signed in"; }
+}
+
+function esc(s){
+  return String(s==null?"":s).replace(/[&<>"']/g, function(c){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
+  });
+}
+
+/* ---------- home stats ---------- */
+function renderStats(){
+  document.getElementById("statHospitals").textContent = state.hospitals.length;
+  document.getElementById("statDoctors").textContent = state.doctors.length;
+}
+
+/* ---------- find care (shared by public tab + patient dashboard) ---------- */
+function matchSpecialty(text){
+  for(var i=0;i<SYMPTOM_MAP.length;i++){
+    if(SYMPTOM_MAP[i][0].test(text)) return SYMPTOM_MAP[i][1];
+  }
+  return "General Physician";
+}
+
+function careResultsHTML(specialty, forPatient){
+  var docs = state.doctors.filter(function(d){ return d.specialty===specialty && d.available; })
+    .sort(function(a,b){ return findHospital(a.hospitalId).distanceKm - findHospital(b.hospitalId).distanceKm; });
+  var html = '<p style="font-size:13.5px;color:var(--slate);margin-bottom:16px;">Matched to <span class="chip">'+esc(specialty)+'</span></p>';
+  if(docs.length===0){
+    html += '<div class="empty">No '+esc(specialty)+' available right now nearby. Try the emergency section if this can\'t wait.</div>';
+    return html;
+  }
+  docs.forEach(function(d){
+    var h = findHospital(d.hospitalId);
+    html += '<div class="result">'
+      + '<div class="result-top">'
+      + '<div><h4>'+esc(d.name)+'</h4><div class="footer-note">'+esc(d.specialty)+' · '+esc(h.name)+', '+esc(h.area)+' · '+h.distanceKm+' km</div></div>'
+      + (h.erOpen ? '<span class="chip urgent">ER open</span>' : '')
+      + '</div>'
+      + '<div class="slot-row" data-doc="'+d.id+'">'
+      + d.slots.map(function(s){
+          var taken = d.booked.indexOf(s) > -1;
+          return '<button class="slot'+(taken?'':'')+'" data-slot="'+s+'" '+(taken?'disabled title="Booked"':'')+' style="'+(taken?'opacity:.4;text-decoration:line-through;':'')+'">'+s+'</button>';
+        }).join("")
+      + '</div>'
+      + (forPatient ? '<div style="margin-top:12px;"><button class="btn small pine" data-book="'+d.id+'" disabled>Select a time</button></div>' : '<p class="footer-note" style="margin-top:10px;">Sign in as a patient to book one of these times.</p>')
+      + '</div>';
+  });
+  return html;
+}
+
+function wireCareResults(container, forPatient){
+  container.querySelectorAll(".slot-row").forEach(function(row){
+    row.addEventListener("click", function(e){
+      if(e.target.tagName!=="BUTTON" || e.target.disabled) return;
+      row.querySelectorAll(".slot").forEach(function(s){ s.classList.remove("picked"); });
+      e.target.classList.add("picked");
+      var resultBox = row.closest(".result");
+      var bookBtn = resultBox.querySelector("[data-book]");
+      if(bookBtn){ bookBtn.disabled = false; bookBtn.dataset.slot = e.target.dataset.slot; bookBtn.textContent = "Book "+e.target.dataset.slot; }
+    });
+  });
+  if(forPatient){
+    container.querySelectorAll("[data-book]").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        var p = currentPatient();
+        if(!p){ toast("Sign in as a patient first"); return; }
+        var docId = btn.dataset.doc, slot = btn.dataset.slot;
+        var d = findDoctor(docId), h = findHospital(d.hospitalId);
+        d.booked.push(slot);
+        p.appointments.push({date:new Date().toISOString().slice(0,10), time:slot, doctorName:d.name, hospitalName:h.name, status:"Confirmed"});
+        save();
+        toast("Booked with "+d.name+" at "+slot);
+        btn.disabled = true; btn.textContent = "Booked";
+      });
+    });
+  }
+}
+
+document.getElementById("symptomSearchBtn").addEventListener("click", function(){
+  var val = document.getElementById("symptomInput").value.trim();
+  var box = document.getElementById("careResults");
+  if(!val){
+    box.innerHTML = '<p style="color:var(--signal);font-size:13.5px;">Describe the problem first.</p>';
+    return;
+  }
+  var specialty = matchSpecialty(val);
+  box.innerHTML = careResultsHTML(specialty, false);
+  wireCareResults(box, false);
+});
+
+/* ---------- patient auth ---------- */
+function renderPatientPickList(){
+  var box = document.getElementById("patientPickList");
+  box.innerHTML = state.patients.map(function(p){
+    return '<div class="pick"><div class="pick-left"><div class="avatar">'+initials(p.name)+'</div>'
+      + '<div><div style="font-weight:500;">'+esc(p.name)+'</div><div class="meta">'+maskAadhaar(p.aadhaar)+' · '+p.age+' yrs</div></div></div>'
+      + '<button class="btn small outline" data-signin-patient="'+esc(p.aadhaar)+'">Sign in</button></div>';
+  }).join("") || '<div class="empty">No demo patients yet — register below.</div>';
+  box.querySelectorAll("[data-signin-patient]").forEach(function(b){
+    b.addEventListener("click", function(){
+      state.currentPatientAadhaar = b.dataset.signinPatient;
+      state.currentDoctorId = null;
+      save(); renderWho();
+      nav("patient-dash");
+    });
+  });
+}
+
+document.getElementById("registerPatientBtn").addEventListener("click", function(){
+  var name = document.getElementById("npName").value.trim();
+  var aadhaar = document.getElementById("npAadhaar").value.trim();
+  var age = document.getElementById("npAge").value.trim();
+  var gender = document.getElementById("npGender").value;
+  var phone = document.getElementById("npPhone").value.trim();
+  var err = document.getElementById("npError");
+  if(!name || !/^\d{12}$/.test(aadhaar) || !age || !/^\d{10}$/.test(phone)){
+    err.textContent = "Enter a name, 12-digit Aadhaar, age and 10-digit phone number.";
+    err.style.display = "block";
+    return;
+  }
+  err.style.display = "none";
+  if(state.patients.some(function(p){return p.aadhaar===aadhaar;})){
+    err.textContent = "A patient with this Aadhaar number already exists — sign in above instead.";
+    err.style.display = "block";
+    return;
+  }
+  var p = {aadhaar:aadhaar, name:name, age:Number(age), gender:gender, phone:phone, history:[], prescriptions:[], appointments:[]};
+  state.patients.push(p);
+  state.currentPatientAadhaar = aadhaar;
+  state.currentDoctorId = null;
+  save(); renderWho();
+  toast("Welcome, "+name);
+  nav("patient-dash");
+});
+
+/* ---------- doctor auth ---------- */
+(function initDoctorForm(){
+  var sp = document.getElementById("ndSpecialty");
+  sp.innerHTML = SPECIALTIES.map(function(s){ return '<option>'+s+'</option>'; }).join("");
+  var hs = document.getElementById("ndHospital");
+  hs.innerHTML = state.hospitals.map(function(h){ return '<option value="'+h.id+'">'+esc(h.name)+', '+esc(h.area)+'</option>'; }).join("");
+})();
+
+function renderDoctorPickList(){
+  var box = document.getElementById("doctorPickList");
+  box.innerHTML = state.doctors.map(function(d){
+    var h = findHospital(d.hospitalId);
+    return '<div class="pick"><div class="pick-left"><div class="avatar">'+initials(d.name)+'</div>'
+      + '<div><div style="font-weight:500;">'+esc(d.name)+'</div><div class="meta">'+esc(d.specialty)+' · '+esc(h.name)+'</div></div></div>'
+      + '<button class="btn small outline" data-signin-doctor="'+d.id+'">Sign in</button></div>';
+  }).join("");
+  box.querySelectorAll("[data-signin-doctor]").forEach(function(b){
+    b.addEventListener("click", function(){
+      state.currentDoctorId = b.dataset.signinDoctor;
+      state.currentPatientAadhaar = null;
+      save(); renderWho();
+      nav("doctor-dash");
+    });
+  });
+}
+
+document.getElementById("registerDoctorBtn").addEventListener("click", function(){
+  var name = document.getElementById("ndName").value.trim();
+  var specialty = document.getElementById("ndSpecialty").value;
+  var hospitalId = document.getElementById("ndHospital").value;
+  var err = document.getElementById("ndError");
+  if(!name){
+    err.textContent = "Enter the doctor's name.";
+    err.style.display = "block";
+    return;
+  }
+  err.style.display = "none";
+  var id = "d" + (state.doctors.length + 1) + "_" + Date.now();
+  var d = {id:id, name: name.indexOf("Dr")===0 ? name : "Dr. "+name, specialty:specialty, hospitalId:hospitalId, available:true, slots:["09:00","10:00","11:00"], booked:[]};
+  state.doctors.push(d);
+  state.currentDoctorId = id;
+  state.currentPatientAadhaar = null;
+  save(); renderWho();
+  toast("Welcome, "+d.name);
+  nav("doctor-dash");
+});
+
+/* ---------- patient dashboard ---------- */
+var pTabState = "care";
+document.querySelectorAll("[data-ptab]").forEach(function(b){
+  b.addEventListener("click", function(){
+    pTabState = b.dataset.ptab;
+    document.querySelectorAll("[data-ptab]").forEach(function(x){ x.classList.toggle("active", x===b); });
+    ["care","appts","meds","record"].forEach(function(t){
+      document.getElementById("ptab-"+t).style.display = (t===pTabState) ? "" : "none";
+    });
+  });
+});
+
+function renderPatientDash(){
+  var p = currentPatient();
+  if(!p){ nav("patient-auth"); return; }
+
+  // care tab
+  var careBox = document.getElementById("ptab-care");
+  careBox.innerHTML = '<h1 style="font-size:22px;margin-bottom:6px;">What\'s going on, '+esc(p.name.split(" ")[0])+'?</h1>'
+    + '<p class="lede" style="margin-bottom:18px;">Describe the problem — we\'ll find who\'s free.</p>'
+    + '<div class="panel"><div class="field-row"><textarea id="pSymptomInput" placeholder="e.g. sharp pain in my knee after a fall"></textarea></div>'
+    + '<button class="btn pine" id="pSymptomBtn">Find care</button></div>'
+    + '<div id="pCareResults" style="margin-top:22px;"></div>';
+  document.getElementById("pSymptomBtn").addEventListener("click", function(){
+    var val = document.getElementById("pSymptomInput").value.trim();
+    var box = document.getElementById("pCareResults");
+    if(!val){ box.innerHTML = '<p style="color:var(--signal);font-size:13.5px;">Describe the problem first.</p>'; return; }
+    var specialty = matchSpecialty(val);
+    box.innerHTML = careResultsHTML(specialty, true);
+    wireCareResults(box, true);
+  });
+
+  // appts tab
+  var apBox = document.getElementById("ptab-appts");
+  apBox.innerHTML = '<h1 style="font-size:22px;margin-bottom:16px;">Your appointments</h1>'
+    + (p.appointments.length===0 ? '<div class="empty">No appointments yet. Use Find care to book one.</div>'
+      : p.appointments.slice().reverse().map(function(a){
+          return '<div class="row" style="border-top:1px solid var(--hair);"><div class="body" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;">'
+            + '<div><h3 style="font-size:15.5px;">'+esc(a.doctorName)+'</h3><p class="desc">'+esc(a.hospitalName)+' · '+esc(a.date)+' at '+esc(a.time)+'</p></div>'
+            + '<span class="chip">'+esc(a.status)+'</span></div></div>';
+        }).join(""));
+
+  // meds tab
+  renderPatientMeds(p);
+
+  // record tab
+  var recBox = document.getElementById("ptab-record");
+  recBox.innerHTML = '<h1 style="font-size:22px;margin-bottom:4px;">My record</h1>'
+    + '<p class="footer-note" style="margin-bottom:18px;">Aadhaar '+maskAadhaar(p.aadhaar)+' · visible to any doctor in the network who looks you up.</p>'
+    + '<div class="panel" style="margin-bottom:22px;"><div class="grid2">'
+    + field("Name", p.name) + field("Age", p.age+" yrs") + field("Gender", p.gender) + field("Phone", p.phone)
+    + '</div></div>'
+    + '<h3 style="font-size:15px;margin-bottom:6px;">Visit history</h3>'
+    + (p.history.length===0 ? '<div class="empty">No past visits on file.</div>'
+      : p.history.slice().reverse().map(function(h){
+          return '<div class="row"><div class="body"><h3 style="font-size:15px;">'+esc(h.problem)+'</h3>'
+            + '<p class="desc">'+esc(h.doctorName)+' · '+esc(h.date)+'</p>'
+            + (h.notes ? '<p class="desc" style="margin-top:6px;">'+esc(h.notes)+'</p>' : '')+'</div></div>';
+        }).join(""));
+}
+
+function field(label, val){
+  return '<div><div class="footer-note" style="margin-bottom:3px;">'+esc(label)+'</div><div style="font-size:14.5px;">'+esc(val)+'</div></div>';
+}
+
+function renderPatientMeds(p){
+  var box = document.getElementById("ptab-meds");
+  var latest = p.prescriptions[p.prescriptions.length-1];
+  var hr = new Date().getHours();
+  var period = hr < 12 ? "morning" : (hr < 17 ? "afternoon" : "night");
+  var today = new Date().toISOString().slice(0,10);
+
+  var scheduleHTML = "";
+  if(latest){
+    var periods = [["morning","Morning · 8:00"],["afternoon","Afternoon · 13:00"],["night","Night · 21:00"]];
+    scheduleHTML = periods.map(function(pr){
+      var key = pr[0];
+      var meds = latest.medicines.filter(function(m){ return m.timing.indexOf(key) > -1; });
+      if(meds.length===0) return "";
+      var isNow = key===period;
+      return '<div class="panel" style="margin-bottom:14px;'+(isNow?'border-color:var(--pine);':'')+'">'
+        + '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">'
+        + '<h3 style="font-size:15px;">'+pr[1]+'</h3>'+(isNow?'<span class="chip now">Now</span>':'')
+        + '</div>'
+        + meds.map(function(m){
+            var logKey = today+"_"+key+"_"+m.name;
+            var checked = !!state.takenLog[logKey];
+            return '<div class="med-line"><div><div class="med-name">'+esc(m.name)+'</div><div class="med-sub">'+esc(m.duration)+'</div></div>'
+              + '<label class="take-check"><input type="checkbox" data-logkey="'+esc(logKey)+'" '+(checked?"checked":"")+'> Taken</label></div>';
+          }).join("")
+        + '</div>';
+    }).join("");
+  }
+
+  box.innerHTML = '<h1 style="font-size:22px;margin-bottom:16px;">Prescriptions &amp; reminders</h1>'
+    + (latest ? ('<h3 style="font-size:15px;margin-bottom:10px;">Today\'s schedule</h3>' + scheduleHTML
+        + '<button class="btn small outline" id="enableReminders" style="margin-top:4px;">Enable reminders on this device</button>'
+        + '<p class="footer-note" style="margin-top:8px;">Reminders fire while this page is open in your browser.</p>')
+      : '<div class="empty">No active prescription. Reminders will appear here after your next visit.</div>')
+    + '<div class="divider"></div>'
+    + '<h3 style="font-size:15px;margin-bottom:10px;">Prescription history</h3>'
+    + p.prescriptions.slice().reverse().map(function(rx){
+        return '<div class="panel" style="margin-bottom:12px;"><div class="footer-note" style="margin-bottom:8px;">'+esc(rx.doctorName)+' · '+esc(rx.date)+'</div>'
+          + rx.medicines.map(function(m){
+              return '<div class="med-line"><div><div class="med-name">'+esc(m.name)+'</div><div class="med-sub">'+esc(m.duration)+'</div></div>'
+                + '<div class="badge-row">'+m.timing.map(function(t){return '<span class="chip off">'+t+'</span>';}).join("")+'</div></div>';
+            }).join("")
+          + '</div>';
+      }).join("");
+
+  box.querySelectorAll("[data-logkey]").forEach(function(cb){
+    cb.addEventListener("change", function(){
+      state.takenLog[cb.dataset.logkey] = cb.checked;
+      save();
+    });
+  });
+
+  var er = document.getElementById("enableReminders");
+  if(er){
+    er.addEventListener("click", function(){
+      if(!("Notification" in window)){ toast("Notifications aren't supported in this browser"); return; }
+      Notification.requestPermission().then(function(perm){
+        if(perm !== "granted"){ toast("Notifications weren't allowed"); return; }
+        toast("Reminders enabled for today");
+        scheduleTodayReminders(latest);
+      });
+    });
+  }
+}
+
+function scheduleTodayReminders(prescription){
+  var times = {morning:8, afternoon:13, night:21};
+  Object.keys(times).forEach(function(key){
+    var meds = prescription.medicines.filter(function(m){ return m.timing.indexOf(key) > -1; });
+    if(meds.length===0) return;
+    var target = new Date();
+    target.setHours(times[key],0,0,0);
+    var ms = target.getTime() - Date.now();
+    if(ms <= 0) return;
+    setTimeout(function(){
+      try{
+        new Notification("Time for your "+key+" medicine", {body: meds.map(function(m){return m.name;}).join(", ")});
+      }catch(e){}
+    }, ms);
+  });
+}
+
+/* ---------- doctor dashboard ---------- */
+var dTabState = "avail";
+document.querySelectorAll("[data-dtab]").forEach(function(b){
+  b.addEventListener("click", function(){
+    dTabState = b.dataset.dtab;
+    document.querySelectorAll("[data-dtab]").forEach(function(x){ x.classList.toggle("active", x===b); });
+    ["avail","lookup","visit"].forEach(function(t){
+      document.getElementById("dtab-"+t).style.display = (t===dTabState) ? "" : "none";
+    });
+  });
+});
+
+var lookedUpPatient = null;
+
+function renderDoctorDash(){
+  var d = currentDoctor();
+  if(!d){ nav("doctor-auth"); return; }
+  var h = findHospital(d.hospitalId);
+
+  var avBox = document.getElementById("dtab-avail");
+  avBox.innerHTML = '<h1 style="font-size:22px;margin-bottom:4px;">'+esc(d.name)+'</h1>'
+    + '<p class="footer-note" style="margin-bottom:20px;">'+esc(d.specialty)+' · '+esc(h.name)+', '+esc(h.area)+'</p>'
+    + '<div class="panel" style="margin-bottom:20px;"><div style="display:flex;justify-content:space-between;align-items:center;">'
+    + '<div><h3 style="font-size:15px;">Available today</h3><p class="footer-note">Patients only see you in search results while this is on.</p></div>'
+    + '<button class="btn small '+(d.available?'pine':'outline')+'" id="toggleAvail">'+(d.available?"Available":"Unavailable")+'</button>'
+    + '</div></div>'
+    + '<h3 style="font-size:15px;margin-bottom:10px;">Today\'s slots</h3>'
+    + '<div class="slot-row" style="margin-bottom:14px;">'+d.slots.map(function(s){
+        var taken = d.booked.indexOf(s) > -1;
+        return '<span class="slot'+(taken?' picked':'')+'">'+s+(taken?' · booked':'')+'</span>';
+      }).join("")+'</div>'
+    + '<div style="display:flex;gap:8px;align-items:flex-end;max-width:260px;">'
+    + '<div class="field-row" style="margin-bottom:0;flex:1;"><label class="field">Add a slot</label><input type="text" id="newSlotTime" placeholder="e.g. 17:00"></div>'
+    + '<button class="btn small outline" id="addSlotBtn">Add</button></div>';
+
+  document.getElementById("toggleAvail").addEventListener("click", function(){
+    d.available = !d.available; save(); renderDoctorDash();
+  });
+  document.getElementById("addSlotBtn").addEventListener("click", function(){
+    var v = document.getElementById("newSlotTime").value.trim();
+    if(!/^\d{1,2}:\d{2}$/.test(v)){ toast("Use a time like 17:00"); return; }
+    d.slots.push(v); save(); renderDoctorDash();
+  });
+
+  renderDoctorLookup();
+  renderDoctorVisitForm();
+}
+
+function renderDoctorLookup(){
+  var box = document.getElementById("dtab-lookup");
+  box.innerHTML = '<h1 style="font-size:22px;margin-bottom:6px;">Patient lookup</h1>'
+    + '<p class="lede" style="margin-bottom:16px;">Enter a patient\'s Aadhaar number to pull their full record — history, notes and prescriptions — from anywhere in the network.</p>'
+    + '<div class="panel"><div style="display:flex;gap:10px;">'
+    + '<input type="text" id="lookupAadhaar" placeholder="12-digit Aadhaar number" maxlength="12" style="flex:1;">'
+    + '<button class="btn pine" id="lookupBtn">Look up</button></div></div>'
+    + '<div id="lookupResult" style="margin-top:22px;"></div>';
+
+  document.getElementById("lookupBtn").addEventListener("click", function(){
+    var v = document.getElementById("lookupAadhaar").value.trim();
+    var out = document.getElementById("lookupResult");
+    var found = state.patients.find(function(p){ return p.aadhaar===v; });
+    if(!found){
+      out.innerHTML = '<div class="empty">No patient found with that Aadhaar number.</div>';
+      lookedUpPatient = null;
+      return;
+    }
+    lookedUpPatient = found;
+    out.innerHTML = patientRecordHTML(found)
+      + '<button class="btn pine small" id="useForVisit" style="margin-top:16px;">Log a visit for '+esc(found.name.split(" ")[0])+'</button>';
+    document.getElementById("useForVisit").addEventListener("click", function(){
+      document.querySelector('[data-dtab="visit"]').click();
+      renderDoctorVisitForm();
+    });
+  });
+}
+
+function patientRecordHTML(p){
+  return '<div class="panel" style="margin-bottom:18px;"><div class="grid2">'
+    + field("Name", p.name) + field("Aadhaar", maskAadhaar(p.aadhaar)) + field("Age", p.age+" yrs") + field("Gender", p.gender) + field("Phone", p.phone)
+    + '</div></div>'
+    + '<h3 style="font-size:15px;margin-bottom:8px;">Visit history</h3>'
+    + (p.history.length===0 ? '<div class="empty">No past visits.</div>'
+      : p.history.slice().reverse().map(function(h){
+          return '<div class="row"><div class="body"><h3 style="font-size:15px;">'+esc(h.problem)+'</h3><p class="desc">'+esc(h.doctorName)+' · '+esc(h.date)+'</p>'
+            + (h.notes ? '<p class="desc" style="margin-top:6px;">'+esc(h.notes)+'</p>' : '')+'</div></div>';
+        }).join(""))
+    + '<h3 style="font-size:15px;margin:18px 0 8px;">Prescriptions on file</h3>'
+    + (p.prescriptions.length===0 ? '<div class="empty">None yet.</div>'
+      : p.prescriptions.slice().reverse().map(function(rx){
+          return '<div class="panel" style="margin-bottom:10px;"><div class="footer-note" style="margin-bottom:8px;">'+esc(rx.doctorName)+' · '+esc(rx.date)+'</div>'
+            + rx.medicines.map(function(m){
+                return '<div class="med-line"><div class="med-name">'+esc(m.name)+' <span class="med-sub">'+esc(m.duration)+'</span></div>'
+                  + '<div class="badge-row">'+m.timing.map(function(t){return '<span class="chip off">'+t+'</span>';}).join("")+'</div></div>';
+              }).join("")+'</div>';
+        }).join(""));
+}
+
+var draftMeds = [];
+
+function renderDoctorVisitForm(){
+  var box = document.getElementById("dtab-visit");
+  var d = currentDoctor();
+  box.innerHTML = '<h1 style="font-size:22px;margin-bottom:6px;">Log a visit</h1>'
+    + '<p class="lede" style="margin-bottom:18px;">Find the patient by Aadhaar, then record the problem and any medicines. This updates their record for every doctor in the network.</p>'
+    + '<div class="panel" style="margin-bottom:18px;"><div style="display:flex;gap:10px;">'
+    + '<input type="text" id="visitAadhaar" placeholder="Patient Aadhaar number" maxlength="12" style="flex:1;" value="'+(lookedUpPatient?lookedUpPatient.aadhaar:'')+'">'
+    + '<button class="btn outline small" id="visitFindBtn">Find</button></div>'
+    + '<div id="visitPatientTag" style="margin-top:10px;font-size:13.5px;color:var(--slate);">'
+    + (lookedUpPatient ? ("Patient: <b style=\"color:var(--ink);\">"+esc(lookedUpPatient.name)+"</b>") : "No patient selected yet.")
+    + '</div></div>'
+    + '<div class="panel">'
+    + '<div class="field-row"><label class="field">Problem / diagnosis</label><input type="text" id="visitProblem" placeholder="e.g. Viral fever"></div>'
+    + '<div class="field-row"><label class="field">Notes</label><textarea id="visitNotes" placeholder="Advice, follow-up instructions..."></textarea></div>'
+    + '<div class="divider"></div>'
+    + '<h3 style="font-size:15px;margin-bottom:10px;">Medicines</h3>'
+    + '<div id="draftMedsList"></div>'
+    + '<div class="grid2" style="margin-top:6px;">'
+    + '<div class="field-row"><label class="field">Medicine name &amp; dose</label><input type="text" id="medName" placeholder="e.g. Amoxicillin 250mg"></div>'
+    + '<div class="field-row"><label class="field">Duration</label><input type="text" id="medDuration" placeholder="e.g. 7 days"></div>'
+    + '</div>'
+    + '<label class="field">Take at</label>'
+    + '<div class="timing-toggle" id="timingToggle" style="margin-bottom:12px;">'
+    + '<button type="button" data-t="morning">Morning</button><button type="button" data-t="afternoon">Afternoon</button><button type="button" data-t="night">Night</button></div>'
+    + '<button class="btn small outline" id="addMedBtn">Add medicine</button>'
+    + '<div class="divider"></div>'
+    + '<div id="visitErr" style="color:var(--signal);font-size:13px;margin-bottom:10px;display:none;"></div>'
+    + '<button class="btn pine" id="saveVisitBtn">Save visit to patient record</button>'
+    + '</div>';
+
+  renderDraftMeds();
+
+  document.getElementById("visitFindBtn").addEventListener("click", function(){
+    var v = document.getElementById("visitAadhaar").value.trim();
+    var found = state.patients.find(function(p){ return p.aadhaar===v; });
+    var tag = document.getElementById("visitPatientTag");
+    if(!found){ tag.innerHTML = 'No patient found with that Aadhaar number.'; lookedUpPatient = null; return; }
+    lookedUpPatient = found;
+    tag.innerHTML = "Patient: <b style=\"color:var(--ink);\">"+esc(found.name)+"</b>";
+  });
+
+  var activeTiming = [];
+  document.getElementById("timingToggle").addEventListener("click", function(e){
+    if(e.target.tagName!=="BUTTON") return;
+    var t = e.target.dataset.t;
+    var idx = activeTiming.indexOf(t);
+    if(idx>-1){ activeTiming.splice(idx,1); e.target.classList.remove("on"); }
+    else{ activeTiming.push(t); e.target.classList.add("on"); }
+  });
+
+  document.getElementById("addMedBtn").addEventListener("click", function(){
+    var name = document.getElementById("medName").value.trim();
+    var duration = document.getElementById("medDuration").value.trim();
+    if(!name || !duration || activeTiming.length===0){
+      toast("Add a name, duration and at least one time");
+      return;
+    }
+    draftMeds.push({name:name, duration:duration, timing:activeTiming.slice()});
+    document.getElementById("medName").value = "";
+    document.getElementById("medDuration").value = "";
+    activeTiming = [];
+    document.querySelectorAll("#timingToggle button").forEach(function(b){ b.classList.remove("on"); });
+    renderDraftMeds();
+  });
+
+  document.getElementById("saveVisitBtn").addEventListener("click", function(){
+    var err = document.getElementById("visitErr");
+    var problem = document.getElementById("visitProblem").value.trim();
+    if(!lookedUpPatient){ err.textContent = "Find a patient by Aadhaar first."; err.style.display="block"; return; }
+    if(!problem){ err.textContent = "Enter the problem or diagnosis."; err.style.display="block"; return; }
+    err.style.display = "none";
+    var today = new Date().toISOString().slice(0,10);
+    var patient = state.patients.find(function(p){ return p.aadhaar===lookedUpPatient.aadhaar; });
+    patient.history.push({date:today, doctorName:d.name, problem:problem, notes:document.getElementById("visitNotes").value.trim()});
+    if(draftMeds.length>0){
+      patient.prescriptions.push({date:today, doctorName:d.name, medicines:draftMeds.slice()});
+    }
+    save();
+    draftMeds = [];
+    toast("Visit saved to "+patient.name+"'s record");
+    document.getElementById("visitProblem").value = "";
+    document.getElementById("visitNotes").value = "";
+    renderDraftMeds();
+  });
+}
+
+function renderDraftMeds(){
+  var box = document.getElementById("draftMedsList");
+  if(!box) return;
+  if(draftMeds.length===0){ box.innerHTML = '<p class="footer-note" style="margin-bottom:10px;">No medicines added yet.</p>'; return; }
+  box.innerHTML = draftMeds.map(function(m,i){
+    return '<div class="med-line"><div><div class="med-name">'+esc(m.name)+'</div><div class="med-sub">'+esc(m.duration)+'</div></div>'
+      + '<div class="badge-row">'+m.timing.map(function(t){return '<span class="chip off">'+t+'</span>';}).join("")+'<button class="btn small outline" data-rmmed="'+i+'" style="padding:4px 9px;">Remove</button></div></div>';
+  }).join("");
+  box.querySelectorAll("[data-rmmed]").forEach(function(b){
+    b.addEventListener("click", function(){ draftMeds.splice(Number(b.dataset.rmmed),1); renderDraftMeds(); });
+  });
+}
+
+/* ---------- emergency ---------- */
+function renderEmergency(){
+  var box = document.getElementById("emgHospitalList");
+  var list = state.hospitals.slice().sort(function(a,b){ return a.distanceKm-b.distanceKm; });
+  box.innerHTML = list.map(function(h){
+    return '<div class="hosp-row"><div><div class="hosp-name">'+esc(h.name)+'</div>'
+      + '<div class="hosp-meta">'+esc(h.area)+' · '+h.distanceKm+' km · '+esc(h.specialties.join(", "))+'</div></div>'
+      + '<div style="display:flex;align-items:center;gap:10px;">'
+      + '<span class="chip '+(h.erOpen?'urgent':'off')+'">'+(h.erOpen?"ER open":"ER closed")+'</span>'
+      + '<a class="btn small signal" href="tel:'+h.phone+'">Call</a></div></div>';
+  }).join("");
+}
+
+/* ---------- chat assistant (talks to YOUR OWN backend at /api/chat) ---------- */
+var CHAT_ENDPOINT = "/api/chat";   // <-- your Express server, see server.js
+var chatTurns = [];                // alternating {role,content}
+var chatBusy = false;
+var chatGreeted = false;
+
+function chatPatientContext(){
+  var p = currentPatient();
+  if(!p) return "";
+  var problems = p.history.map(function(h){ return h.problem; }).join(", ") || "none on file";
+  var meds = [];
+  p.prescriptions.forEach(function(rx){ rx.medicines.forEach(function(m){ meds.push(m.name); }); });
+  return { name: p.name, age: p.age, problems: problems, medicines: meds.join(", ") || "none on file" };
+}
+
+function chatAddMsg(role, text){
+  var body = document.getElementById("chatBody");
+  var div = document.createElement("div");
+  div.className = "msg " + (role==="user" ? "user" : "bot");
+  div.textContent = text;
+  body.appendChild(div);
+  body.scrollTop = body.scrollHeight;
+  return div;
+}
+function chatAddNote(text){
+  var body = document.getElementById("chatBody");
+  var div = document.createElement("div");
+  div.className = "msg note";
+  div.textContent = text;
+  body.appendChild(div);
+  body.scrollTop = body.scrollHeight;
+}
+
+function chatSetBusy(b){
+  chatBusy = b;
+  document.getElementById("chatSend").disabled = b;
+  document.getElementById("chatInput").disabled = b;
+}
+
+function chatSend(){
+  if(chatBusy) return;
+  var input = document.getElementById("chatInput");
+  var text = input.value.trim();
+  if(!text) return;
+  input.value = "";
+  chatAddMsg("user", text);
+  chatTurns.push({role:"user", content:text});
+  chatSetBusy(true);
+
+  var body = document.getElementById("chatBody");
+  var typing = document.createElement("div");
+  typing.className = "typing";
+  typing.innerHTML = "<span></span><span></span><span></span>";
+  body.appendChild(typing);
+  body.scrollTop = body.scrollHeight;
+
+  fetch(CHAT_ENDPOINT, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ messages: chatTurns, patient: chatPatientContext() })
+  })
+  .then(function(res){
+    if(!res.ok) throw new Error("http_" + res.status);
+    return res.json();
+  })
+  .then(function(data){
+    if(typing.parentNode) typing.remove();
+    var reply = data.text || "Sorry, I didn't get a response.";
+    chatAddMsg("bot", reply);
+    chatTurns.push({role:"assistant", content:reply});
+    chatSetBusy(false);
+  })
+  .catch(function(err){
+    if(typing.parentNode) typing.remove();
+    chatAddNote("Couldn't reach the assistant — is server.js running? (" + err.message + ")");
+    chatSetBusy(false);
+  });
+}
+
+function initChat(){
+  document.getElementById("chatFab").classList.add("show");
+
+  document.getElementById("chatFab").addEventListener("click", function(){
+    var panel = document.getElementById("chatPanel");
+    panel.classList.add("open");
+    if(!chatGreeted){
+      chatGreeted = true;
+      chatAddMsg("bot", "Hi, I'm the Aarogya assistant. Ask me a general medical question, or tell me what's going on — I may ask a couple of quick questions about your history if it helps.");
+    }
+  });
+  document.getElementById("chatClose").addEventListener("click", function(){
+    document.getElementById("chatPanel").classList.remove("open");
+  });
+  document.getElementById("chatSend").addEventListener("click", chatSend);
+  var ta = document.getElementById("chatInput");
+  ta.addEventListener("keydown", function(e){
+    if(e.key === "Enter" && !e.shiftKey){ e.preventDefault(); chatSend(); }
+  });
+}
+
+/* ---------- init ---------- */
+renderPatientPickList();
+renderDoctorPickList();
+renderWho();
+renderStats();
+renderEmergency();
+initChat();
+})();
+</script>
+</body>
+</html>
